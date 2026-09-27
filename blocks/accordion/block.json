@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "accessible-accordion/accordion",
+	"version": "0.1.0",
+	"title": "Accessible Accordion",
+	"category": "design",
+	"icon": "list-view",
+	"description": "Collapsible sections built from native details and summary elements. No JavaScript required.",
+	"keywords": [ "faq", "details", "summary", "disclosure", "toggle", "collapse" ],
+	"textdomain": "accessible-accordion-block",
+	"supports": {
+		"anchor": true,
+		"html": false,
+		"align": [ "wide", "full" ],
+		"color": {
+			"background": true,
+			"text": false
+		},
+		"spacing": {
+			"margin": [ "top", "bottom" ],
+			"padding": true
+		},
+		"typography": {
+			"lineHeight": true
+		}
+	},
+	"styles": [
+		{ "name": "default", "label": "Default", "isDefault": true },
+		{ "name": "boxed", "label": "Boxed" },
+		{ "name": "minimal", "label": "Minimal" }
+	],
+	"style": "file:./style.css",
+	"acf": {
+		"blockVersion": 3,
+		"renderTemplate": "render.php"
+	}
+}

@@ -1,0 +1,128 @@
+/**
+ * Accessible Accordion: front end and editor styles.
+ *
+ * The custom properties below are the block's styling API. A theme can
+ * restyle every accordion by setting them, with no specificity fights.
+ * :where() keeps the wrapper selector at zero specificity for the same reason.
+ */
+
+/* Tokens
+   ========================================================================== */
+
+:where(.wp-block-accessible-accordion-accordion) {
+	--aab-border-color: currentColor;
+	--aab-border-width: 1px;
+	--aab-divider-width: var(--aab-border-width);
+	--aab-radius: 0.5rem;
+	--aab-gap: 0.75rem;
+	--aab-space: 1rem;
+	--aab-marker-size: 0.5em;
+
+	/* Set per block by the Style fields, and unset by default so everything
+	   inherits: --aab-label-color, --aab-label-size, --aab-label-weight,
+	   --aab-body-color, --aab-body-size, --aab-item-bg. */
+}
+
+/* Default style: a line above the first item and under each item
+   ========================================================================== */
+
+:where(.wp-block-accessible-accordion-accordion) .aab-item {
+	border-block-end: var(--aab-divider-width) solid var(--aab-border-color);
+}
+
+/* :where() keeps this at one class, so the Boxed border can still win. */
+:where(.wp-block-accessible-accordion-accordion) .aab-item:where(:first-child) {
+	border-block-start: var(--aab-divider-width) solid var(--aab-border-color);
+}
+
+/* Summary
+   ========================================================================== */
+
+:where(.wp-block-accessible-accordion-accordion) .aab-summary {
+	position: relative;
+	padding-block: var(--aab-space);
+	padding-inline-end: calc(var(--aab-space) * 2);
+	color: var(--aab-label-color, inherit);
+	font-size: var(--aab-label-size, inherit);
+	list-style: none;
+	cursor: pointer;
+}
+
+/* Safari still draws the native marker without this. */
+:where(.wp-block-accessible-accordion-accordion) .aab-summary::-webkit-details-marker {
+	display: none;
+}
+
+/* Heading level is structure, not size. Headings match the plain label. */
+:where(.wp-block-accessible-accordion-accordion) .aab-label {
+	margin: 0;
+	font: inherit;
+	font-weight: var(--aab-label-weight, inherit);
+}
+
+/* Chevron. Physical borders draw the shape; the logical inset places it,
+   so it sits on the correct side in right-to-left languages. */
+:where(.wp-block-accessible-accordion-accordion) .aab-summary::after {
+	content: "";
+	position: absolute;
+	inset-inline-end: 0.25em;
+	top: 50%;
+	width: var(--aab-marker-size);
+	height: var(--aab-marker-size);
+	border-right: 2px solid;
+	border-bottom: 2px solid;
+	transform: translateY(-75%) rotate(45deg);
+	transition: transform 0.2s ease;
+}
+
+:where(.wp-block-accessible-accordion-accordion) .aab-item[open] > .aab-summary::after {
+	transform: translateY(-25%) rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:where(.wp-block-accessible-accordion-accordion) .aab-summary::after {
+		transition: none;
+	}
+}
+
+/* Body
+   ========================================================================== */
+
+:where(.wp-block-accessible-accordion-accordion) .aab-body {
+	padding-block-end: var(--aab-space);
+	color: var(--aab-body-color, inherit);
+	font-size: var(--aab-body-size, inherit);
+}
+
+:where(.wp-block-accessible-accordion-accordion) .aab-body > :first-child {
+	margin-block-start: 0;
+}
+
+:where(.wp-block-accessible-accordion-accordion) .aab-body > :last-child {
+	margin-block-end: 0;
+}
+
+/* Boxed style: each item is its own card
+   ========================================================================== */
+
+:where(.wp-block-accessible-accordion-accordion.is-style-boxed) {
+	--aab-divider-width: 0;
+}
+
+:where(.wp-block-accessible-accordion-accordion.is-style-boxed) .aab-item {
+	border: var(--aab-border-width) solid var(--aab-border-color);
+	border-radius: var(--aab-radius);
+	padding-inline: var(--aab-space);
+	background-color: var(--aab-item-bg, transparent);
+}
+
+:where(.wp-block-accessible-accordion-accordion.is-style-boxed) .aab-item:not(:last-of-type) {
+	margin-block-end: var(--aab-gap);
+}
+
+/* Minimal style: no lines at all
+   ========================================================================== */
+
+:where(.wp-block-accessible-accordion-accordion.is-style-minimal) {
+	--aab-divider-width: 0;
+}
